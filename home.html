@@ -390,6 +390,47 @@ footer{
 @media(max-width:600px){
   nav{flex-direction:column; gap:.8rem;}
 }
+
+.top-picks-container {
+  margin: 2rem auto;
+  max-width: 400px;
+  text-align: center;
+}
+
+.top-picks-container h3 {
+  font-size: 1.5rem;
+  color: var(--orange);
+  margin-bottom: 1rem;
+}
+
+.top-pick-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #142f47;
+  color: #fff;
+  font-size: 1.25rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.whatsapp-btn {
+  background: var(--orange);
+  color: var(--navy);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+  transform: scale(1.05);
+  }
+  
 </style>
 
 </head>
@@ -489,6 +530,16 @@ function goToPioneers() {
 </style>
 
 <section id="services">  
+
+<div class="top-picks-container">
+  <h3>Top Picks</h3>
+  <div class="top-pick-box" id="top-pick-box">
+    <span class="pick-name">Photography</span>
+    <a href="https://wa.me/+254794939065?text=Hi,%20I%20am%20interested%20in%20Photography" target="_blank" class="whatsapp-btn">Inquire</a>
+  </div>
+</div>
+<br><br>
+  
   <h2>Our Services</h2>  
   <div class="accordion">  
 
@@ -743,7 +794,7 @@ document.querySelectorAll('.accordion-header').forEach(header => {
 });
 
 // WhatsApp booking function
-const phone = "254793949829"; // your WhatsApp business number
+const phone = "254794939065"; // your WhatsApp business number
 function orderService(service, price) {
   const msg = encodeURIComponent(`Hello AllSpark Solutions, I would like to order:\nService: ${service}\nPrice: ${price}`);
   window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
@@ -757,11 +808,54 @@ document.getElementById("year").textContent = new Date().getFullYear();
 <script>
   function contactWhatsApp() {
     // Replace with your WhatsApp number in international format (no + or spaces)
-    let phone = '254793949829';
+    let phone = '254794939065';
     let message = encodeURIComponent("Hello AllSpark Solutions, I would like to inquire about your services.");
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
   }
 </script>
+
+
+<script>
+const topPicks = [
+  { name: "Photography", waMsg: "Hi, I am interested in Photography" },
+  { name: "Graphic Design", waMsg: "Hi, I am interested in Graphic Design" },
+  { name: "Excel", waMsg: "Hi, I am interested in Excel Services" },
+  { name: "Python Programming", waMsg: "Hi, I am interested in Python Programming" },
+  { name: "R Programming", waMsg: "Hi, I am interested in R Programming" }
+];
+
+let currentPick = 0;
+const topPickBox = document.getElementById("top-pick-box");
+const pickNameSpan = document.createElement("span");
+pickNameSpan.className = "pick-name";
+const waButton = document.createElement("a");
+waButton.className = "whatsapp-btn";
+waButton.target = "_blank";
+
+// Add spans and button to the box
+topPickBox.innerHTML = "";
+topPickBox.appendChild(pickNameSpan);
+topPickBox.appendChild(waButton);
+
+function showNextPick() {
+  topPickBox.style.opacity = 0;
+  setTimeout(() => {
+    const pick = topPicks[currentPick];
+    pickNameSpan.textContent = pick.name;
+    waButton.href = `https://wa.me/+254794939065?text=${encodeURIComponent(pick.waMsg)}`;
+    topPickBox.style.opacity = 1;
+    currentPick = (currentPick + 1) % topPicks.length;
+  }, 400);
+}
+
+// Initialize first pick
+showNextPick();
+
+// Rotate every 4 seconds
+setInterval(showNextPick, 4000);
+</script>
+</body>
+</html>
 
 
 
